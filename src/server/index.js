@@ -6,6 +6,7 @@ import express from 'express';
 import { APP_NAME, STATIC_PATH, WEB_PORT } from '../shared/config';
 import { isProd } from '../shared/util';
 import renderApp from './render-app';
+import { helloEndpointRoute } from '../shared/routes';
 
 const app = express();
 
@@ -22,4 +23,8 @@ app.listen(WEB_PORT, () => {
   console.log(
     `Server running on port ${WEB_PORT} ${isProd ? '(production)' : '(development).\nKeep "yarn dev:wds" running in an other terminal'}.`,
   );
+});
+
+app.get(helloEndpointRoute(), (req, res) => {
+  res.json({ serverMessage: `Hello from the server! (received ${req.params.num})` });
 });
